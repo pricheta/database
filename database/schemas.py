@@ -14,6 +14,8 @@ class Base(AsyncAttrs, DeclarativeBase):
 
 
 class User(Base):
+    __tablename__ = "users"
+
     email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     name: Mapped[str] = mapped_column(String, nullable=False)
     password: Mapped[str] = mapped_column(String, nullable=False)
