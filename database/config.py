@@ -1,7 +1,15 @@
-from pydantic_settings import BaseSettings
+import os
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class DBSettings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "..", ".env",
+        )
+    )
+
     DB_USER: str
     DB_PASSWORD: str
     DB_HOST: str
