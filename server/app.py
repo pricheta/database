@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from server.models import CreateUserRequest
-from database.async_client import create_user_to_db
+from database.async_client import create_user_to_db, get_user_from_db
 
 app = FastAPI(
     docs_url="/api",
@@ -16,7 +16,7 @@ async def index():
 
 @app.get("/users/get/{user_id}")
 async def get_user(user_id: int):
-    return {"message": f"User {user_id} returned"}
+    return await get_user_from_db(user_id=user_id)
 
 
 @app.post("/users/create/")
