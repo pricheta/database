@@ -4,14 +4,9 @@ from server.models import CreateUserRequest
 from database.async_client import create_user_to_db, get_user_from_db
 
 app = FastAPI(
-    docs_url="/api",
+    docs_url="/",
     redoc_url=None,
 )
-
-
-@app.get("/")
-async def index():
-    return {"message": "Hello, World!"}
 
 
 @app.get("/users/get/{user_id}")
