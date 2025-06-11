@@ -8,9 +8,9 @@ class CreateUserRequest(BaseModel):
     name: str
     password: str
 
-
-    @model_validator(mode="after")
-    def hash_password(self) -> "CreateUserRequest":
-        if not self.password.startswith("$2b$"):
-            self.password = pwd_context.hash(self.password)
-        return self
+    #
+    # @model_validator(mode="after")
+    # def hash_password(self) -> "CreateUserRequest":
+    #     if not self.password.startswith("$2b$"):
+    #         self.password = pwd_context.hash(self.password)
+    #     return self
