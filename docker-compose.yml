@@ -17,8 +17,8 @@ services:
     volumes:
       - ./server:/app/server
     depends_on:
-      postgres:
-        condition: service_healthy
+      - migrations
+      - postgres
     restart: unless-stopped
 
   postgres:
@@ -39,6 +39,22 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+
+  migrations:
+    build:
+      context: .
+      dockerfile: docker/migrations/Dockerfile
+    container_name: migrations_container
+    command: sh -c "alembic upgrade head"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    restart: on-failure
 
 volumes:
   pgdata:
